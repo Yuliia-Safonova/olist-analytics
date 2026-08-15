@@ -4,7 +4,7 @@ SELECT
     o.order_purchase_t,
     strftime('%Y-%m', o.order_purchase_t) AS ym,
     cu.customer_state,
-    COALESCE(t.product_category_1, 'unknown') AS category,
+    COALESCE(t.product_category_1, 'unknown') AS category_en,
     oi.price,
     oi.freight_value,
     op.payment_type AS payment_method,
@@ -34,7 +34,7 @@ ORDER BY ym;
 -- Розвідувальні запити
 -- ТОП-10 категорій за виторгом
 SELECT
-	COALESCE(t.product_category_1, 'unknown') AS category,
+	COALESCE(t.product_category_1, 'unknown') AS category_en,
 	ROUND(SUM(oi.price), 2) AS revenue
 FROM olist_order_items_dataset oi
 JOIN olist_orders_dataset o USING (order_id)
@@ -59,7 +59,7 @@ ORDER BY revenue DESC;
 
 -- Середня оцінка (review_score) за категоріями
 SELECT
-	COALESCE(t.product_category_1, 'unknown') AS category,
+	COALESCE(t.product_category_1, 'unknown') AS category_en,
     ROUND(AVG(r.review_score), 2) AS avg_score,
     COUNT(*) AS reviews
 FROM olist_order_reviews_dataset r
